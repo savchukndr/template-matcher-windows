@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="dyplomDB@localhost">
+  <database-model serializer="dbm" rdbms="POSTGRES" format-version="4.9">
+    <root id="1">
+      <ServerVersion>9.6.2</ServerVersion>
+    </root>
+    <database id="2" parent="1" name="bt2">
+      <ObjectId>59200</ObjectId>
+    </database>
+    <database id="3" parent="1" name="dyplomDB">
+      <ObjectId>34624</ObjectId>
+      <IntrospectionStateNumber>106</IntrospectionStateNumber>
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </database>
+    <database id="4" parent="1" name="postgres">
+      <ObjectId>12401</ObjectId>
+      <Comment>default administrative connection database</Comment>
+    </database>
+    <role id="5" parent="1" name="pg_signal_backend">
+      <ObjectId>4200</ObjectId>
+      <Inherit>1</Inherit>
+      <ConnectionLimit>-1</ConnectionLimit>
+    </role>
+    <role id="6" parent="1" name="postgres">
+      <ObjectId>10</ObjectId>
+      <SuperRole>1</SuperRole>
+      <Inherit>1</Inherit>
+      <CreateRole>1</CreateRole>
+      <CreateDb>1</CreateDb>
+      <CanLogin>1</CanLogin>
+      <Replication>1</Replication>
+      <ConnectionLimit>-1</ConnectionLimit>
+      <BypassRls>1</BypassRls>
+    </role>
+    <role id="7" parent="1" name="savchukndr">
+      <ObjectId>26279</ObjectId>
+      <SuperRole>1</SuperRole>
+      <Inherit>1</Inherit>
+      <CreateRole>1</CreateRole>
+      <CreateDb>1</CreateDb>
+      <CanLogin>1</CanLogin>
+      <ConnectionLimit>-1</ConnectionLimit>
+    </role>
+    <schema id="8" parent="3" name="information_schema">
+      <ObjectId>12113</ObjectId>
+    </schema>
+    <schema id="9" parent="3" name="pg_catalog">
+      <ObjectId>11</ObjectId>
+      <Comment>system catalog schema</Comment>
+    </schema>
+    <schema id="10" parent="3" name="pg_temp_1">
+      <ObjectId>11848</ObjectId>
+    </schema>
+    <schema id="11" parent="3" name="pg_toast">
+      <ObjectId>99</ObjectId>
+      <Comment>reserved schema for TOAST tables</Comment>
+    </schema>
+    <schema id="12" parent="3" name="pg_toast_temp_1">
+      <ObjectId>11849</ObjectId>
+    </schema>
+    <schema id="13" parent="3" name="public">
+      <ObjectId>2200</ObjectId>
+      <Comment>standard public schema</Comment>
+      <IntrospectionTimestamp>2018-07-27.19:55:10.236</IntrospectionTimestamp>
+      <IntrospectionStateNumber>399004</IntrospectionStateNumber>
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <access-method id="14" parent="3" name="btree">
+      <ObjectId>403</ObjectId>
+      <Comment>b-tree index access method</Comment>
+      <Handler>pg_catalog.bthandler</Handler>
+      <HandlerId>330</HandlerId>
+      <Type>index</Type>
+    </access-method>
+    <access-method id="15" parent="3" name="hash">
+      <ObjectId>405</ObjectId>
+      <Comment>hash index access method</Comment>
+      <Handler>pg_catalog.hashhandler</Handler>
+      <HandlerId>331</HandlerId>
+      <Type>index</Type>
+    </access-method>
+    <access-method id="16" parent="3" name="gist">
+      <ObjectId>783</ObjectId>
+      <Comment>GiST index access method</Comment>
+      <Handler>pg_catalog.gisthandler</Handler>
+      <HandlerId>332</HandlerId>
+      <Type>index</Type>
+    </access-method>
+    <access-method id="17" parent="3" name="gin">
+      <ObjectId>2742</ObjectId>
+      <Comment>GIN index access method</Comment>
+      <Handler>pg_catalog.ginhandler</Handler>
+      <HandlerId>333</HandlerId>
+      <Type>index</Type>
+    </access-method>
+    <access-method id="18" parent="3" name="spgist">
+      <ObjectId>4000</ObjectId>
+      <Comment>SP-GiST index access method</Comment>
+      <Handler>pg_catalog.spghandler</Handler>
+      <HandlerId>334</HandlerId>
+      <Type>index</Type>
+    </access-method>
+    <access-method id="19" parent="3" name="brin">
+      <ObjectId>3580</ObjectId>
+      <Comment>block range index (BRIN) access method</Comment>
+      <Handler>pg_catalog.brinhandler</Handler>
+      <HandlerId>335</HandlerId>
+      <Type>index</Type>
+    </access-method>
+    <sequence id="20" parent="13" name="agreement_data_id_agreement_data_seq">
+      <ObjectId>85233</ObjectId>
+      <StateNumber>399004</StateNumber>
+      <SequenceIdentity>1</SequenceIdentity>
+      <BelongsToColumn>1</BelongsToColumn>
+      <CacheSize>1</CacheSize>
+    </sequence>
+    <sequence id="21" parent="13" name="agreement_id_agreement_seq">
+      <ObjectId>85220</ObjectId>
+      <StateNumber>399003</StateNumber>
+      <SequenceIdentity>1</SequenceIdentity>
+      <BelongsToColumn>1</BelongsToColumn>
+      <CacheSize>1</CacheSize>
+    </sequence>
+    <sequence id="22" parent="13" name="chain_id_chain_seq">
+      <ObjectId>85145</ObjectId>
+      <StateNumber>398978</StateNumber>
+      <SequenceIdentity>1</SequenceIdentity>
+      <BelongsToColumn>1</BelongsToColumn>
+      <CacheSize>1</CacheSize>
+    </sequence>
+    <sequence id="23" parent="13" name="product_id_product_seq">
+      <ObjectId>85098</ObjectId>
+      <StateNumber>398948</StateNumber>
+      <SequenceIdentity>1</SequenceIdentity>
+      <BelongsToColumn>1</BelongsToColumn>
+      <CacheSize>1</CacheSize>
+    </sequence>
+    <sequence id="24" parent="13" name="product_type_id_product_type_seq">
+      <ObjectId>85076</ObjectId>
+      <StateNumber>398946</StateNumber>
+      <SequenceIdentity>1</SequenceIdentity>
+      <BelongsToColumn>1</BelongsToColumn>
+      <CacheSize>1</CacheSize>
+    </sequence>
+    <sequence id="25" parent="13" name="store_id_store_seq">
+      <ObjectId>85156</ObjectId>
+      <StateNumber>398979</StateNumber>
+      <SequenceIdentity>1</SequenceIdentity>
+      <BelongsToColumn>1</BelongsToColumn>
+      <CacheSize>1</CacheSize>
+    </sequence>
+    <table id="26" parent="13" name="agreement">
+      <ObjectId>85222</ObjectId>
+      <StateNumber>399004</StateNumber>
+    </table>
+    <table id="27" parent="13" name="agreement_data">
+      <ObjectId>85235</ObjectId>
+      <StateNumber>399004</StateNumber>
+    </table>
+    <table id="28" parent="13" name="chain">
+      <ObjectId>85147</ObjectId>
+      <StateNumber>398979</StateNumber>
+    </table>
+    <table id="29" parent="13" name="product">
+      <ObjectId>85100</ObjectId>
+      <StateNumber>399004</StateNumber>
+    </table>
+    <table id="30" parent="13" name="product_type">
+      <ObjectId>85078</ObjectId>
+      <StateNumber>398948</StateNumber>
+    </table>
+    <table id="31" parent="13" name="store">
+      <ObjectId>85158</ObjectId>
+      <StateNumber>399003</StateNumber>
+    </table>
+    <column id="32" parent="26" name="id_agreement">
+      <Position>1</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>399003</StateNumber>
+      <DefaultExpression>nextval(&apos;agreement_id_agreement_seq&apos;::regclass)</DefaultExpression>
+      <TypeId>23</TypeId>
+      <SequenceName>agreement_id_agreement_seq</SequenceName>
+    </column>
+    <column id="33" parent="26" name="id_store">
+      <Position>2</Position>
+      <DataType>integer|0s</DataType>
+      <StateNumber>399003</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <index id="34" parent="26" name="agreement_pkey">
+      <ObjectId>85226</ObjectId>
+      <ColNames>id_agreement</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="35" parent="26" name="agreement_pkey">
+      <ObjectId>85227</ObjectId>
+      <ColNames>id_agreement</ColNames>
+      <UnderlyingIndexName>agreement_pkey</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="36" parent="26" name="agreement_id_store_fkey">
+      <ObjectId>85228</ObjectId>
+      <ColNames>id_store</ColNames>
+      <RefTableId>85158</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>store</RefTableName>
+      <RefKeyName>store_pkey</RefKeyName>
+      <RefColNames>id_store</RefColNames>
+    </foreign-key>
+    <column id="37" parent="27" name="id_agreement_data">
+      <Position>1</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>399004</StateNumber>
+      <DefaultExpression>nextval(&apos;agreement_data_id_agreement_data_seq&apos;::regclass)</DefaultExpression>
+      <TypeId>23</TypeId>
+      <SequenceName>agreement_data_id_agreement_data_seq</SequenceName>
+    </column>
+    <column id="38" parent="27" name="title">
+      <Position>2</Position>
+      <DataType>text|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>399004</StateNumber>
+      <TypeId>25</TypeId>
+    </column>
+    <column id="39" parent="27" name="product_count">
+      <Position>3</Position>
+      <DataType>integer|0s</DataType>
+      <StateNumber>399004</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="40" parent="27" name="product_shelf_position">
+      <Position>4</Position>
+      <DataType>integer|0s</DataType>
+      <StateNumber>399004</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="41" parent="27" name="id_product">
+      <Position>5</Position>
+      <DataType>integer|0s</DataType>
+      <StateNumber>399004</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="42" parent="27" name="id_agreement">
+      <Position>6</Position>
+      <DataType>integer|0s</DataType>
+      <StateNumber>399004</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <index id="43" parent="27" name="agreement_data_pkey">
+      <ObjectId>85242</ObjectId>
+      <ColNames>id_agreement_data</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="44" parent="27" name="agreement_data_pkey">
+      <ObjectId>85243</ObjectId>
+      <ColNames>id_agreement_data</ColNames>
+      <UnderlyingIndexName>agreement_data_pkey</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="45" parent="27" name="agreement_data_id_product_fkey">
+      <ObjectId>85244</ObjectId>
+      <ColNames>id_product</ColNames>
+      <RefTableId>85100</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>product</RefTableName>
+      <RefKeyName>product_pkey</RefKeyName>
+      <RefColNames>id_product</RefColNames>
+    </foreign-key>
+    <foreign-key id="46" parent="27" name="agreement_data_id_agreement_fkey">
+      <ObjectId>85249</ObjectId>
+      <ColNames>id_agreement</ColNames>
+      <RefTableId>85222</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>agreement</RefTableName>
+      <RefKeyName>agreement_pkey</RefKeyName>
+      <RefColNames>id_agreement</RefColNames>
+    </foreign-key>
+    <column id="47" parent="28" name="id_chain">
+      <Position>1</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>398978</StateNumber>
+      <DefaultExpression>nextval(&apos;chain_id_chain_seq&apos;::regclass)</DefaultExpression>
+      <TypeId>23</TypeId>
+      <SequenceName>chain_id_chain_seq</SequenceName>
+    </column>
+    <column id="48" parent="28" name="title">
+      <Position>2</Position>
+      <DataType>text|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>398978</StateNumber>
+      <TypeId>25</TypeId>
+    </column>
+    <index id="49" parent="28" name="chain_pkey">
+      <ObjectId>85154</ObjectId>
+      <ColNames>id_chain</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="50" parent="28" name="chain_pkey">
+      <ObjectId>85155</ObjectId>
+      <ColNames>id_chain</ColNames>
+      <UnderlyingIndexName>chain_pkey</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <column id="51" parent="29" name="id_product">
+      <Position>1</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>398948</StateNumber>
+      <DefaultExpression>nextval(&apos;product_id_product_seq&apos;::regclass)</DefaultExpression>
+      <TypeId>23</TypeId>
+      <SequenceName>product_id_product_seq</SequenceName>
+    </column>
+    <column id="52" parent="29" name="id_product_type">
+      <Position>2</Position>
+      <DataType>integer|0s</DataType>
+      <StateNumber>398948</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="53" parent="29" name="title">
+      <Position>3</Position>
+      <DataType>text|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>398948</StateNumber>
+      <TypeId>25</TypeId>
+    </column>
+    <index id="54" parent="29" name="product_pkey">
+      <ObjectId>85107</ObjectId>
+      <ColNames>id_product</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="55" parent="29" name="product_pkey">
+      <ObjectId>85108</ObjectId>
+      <ColNames>id_product</ColNames>
+      <UnderlyingIndexName>product_pkey</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="56" parent="29" name="product_id_product_type_fkey">
+      <ObjectId>85109</ObjectId>
+      <ColNames>id_product_type</ColNames>
+      <RefTableId>85078</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>product_type</RefTableName>
+      <RefKeyName>product_type_pkey</RefKeyName>
+      <RefColNames>id_product_type</RefColNames>
+    </foreign-key>
+    <column id="57" parent="30" name="id_product_type">
+      <Position>1</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>398946</StateNumber>
+      <DefaultExpression>nextval(&apos;product_type_id_product_type_seq&apos;::regclass)</DefaultExpression>
+      <TypeId>23</TypeId>
+      <SequenceName>product_type_id_product_type_seq</SequenceName>
+    </column>
+    <column id="58" parent="30" name="title">
+      <Position>2</Position>
+      <DataType>text|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>398946</StateNumber>
+      <TypeId>25</TypeId>
+    </column>
+    <index id="59" parent="30" name="product_type_pkey">
+      <ObjectId>85085</ObjectId>
+      <ColNames>id_product_type</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="60" parent="30" name="product_type_pkey">
+      <ObjectId>85086</ObjectId>
+      <ColNames>id_product_type</ColNames>
+      <UnderlyingIndexName>product_type_pkey</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <column id="61" parent="31" name="id_store">
+      <Position>1</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>398979</StateNumber>
+      <DefaultExpression>nextval(&apos;store_id_store_seq&apos;::regclass)</DefaultExpression>
+      <TypeId>23</TypeId>
+      <SequenceName>store_id_store_seq</SequenceName>
+    </column>
+    <column id="62" parent="31" name="id_chain">
+      <Position>2</Position>
+      <DataType>integer|0s</DataType>
+      <StateNumber>398979</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="63" parent="31" name="title">
+      <Position>3</Position>
+      <DataType>text|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>398979</StateNumber>
+      <TypeId>25</TypeId>
+    </column>
+    <index id="64" parent="31" name="store_pkey">
+      <ObjectId>85165</ObjectId>
+      <ColNames>id_store</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="65" parent="31" name="store_pkey">
+      <ObjectId>85166</ObjectId>
+      <ColNames>id_store</ColNames>
+      <UnderlyingIndexName>store_pkey</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="66" parent="31" name="store_id_chain_fkey">
+      <ObjectId>85167</ObjectId>
+      <ColNames>id_chain</ColNames>
+      <RefTableId>85147</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>chain</RefTableName>
+      <RefKeyName>chain_pkey</RefKeyName>
+      <RefColNames>id_chain</RefColNames>
+    </foreign-key>
+  </database-model>
+</dataSource>
