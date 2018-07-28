@@ -8,13 +8,15 @@ import sys
 from PostgreSQL import PostgreSQL
 from Redis import Redis
 from random import randint
+from Estimate import estimate
 
 
 class Main:
 
-    def __init__(self, image_key):
-        # self.image_key = image_key
-        self.image_key = '2018/07/27-19:44:31_sava_1'
+    def __init__(self, image_key, shelf_count):
+        self.image_key = image_key
+        self.shelf_count = int(shelf_count)
+        # self.image_key = '2018/07/27-19:44:31_sava_1'
 
     @staticmethod
     def find_templ(img, img_tpl):
@@ -86,23 +88,33 @@ class Main:
 
     def main(self):
         # Connect to redis and get image to proceed
+        postgres = PostgreSQL()
+        agreement_id = postgres.select_agreement_id(self.image_key)
+        product_title = postgres.select_product_title(str(agreement_id[0]))
+        product_type_title = postgres.select_product_type_tytle(product_title[0])
         global match_count, shelf
         redis = Redis(self.image_key)
         redis.get_image()
 
+        # TODO: change to image
         # enter_image_path = "C:\\Users\\savch\\PycharmProjects\\template-matcher\\data\\image\\image.jpg"
         enter_image_path = "C:\\Users\\savch\\PycharmProjects\\template-matcher\\data\\image\\0000.jpg"
-        template_image_folder = "C:\\Users\\savch\\PycharmProjects\\template-matcher\\data\\template\\"
+        template_image_folder = "C:\\Users\\savch\\PycharmProjects\\template-matcher\\data\\template\\{}".format(product_type_title[0])
+        print(template_image_folder)
 
         # template image
         templ = [os.path.join(template_image_folder, b) for b in os.listdir(template_image_folder) if
                  os.path.isfile(os.path.join(template_image_folder, b))]
+        templ = [template for template in templ if template == "C:\\Users\\savch\\PycharmProjects\\template-matcher\\data\\template\\{}\\{}.jpg".format(product_type_title[0], product_title[0])]
+
+
 
         # shelf count
-        shelf_count = 2
-        crop_image_list = self.crop_image(enter_image_path, shelf_count)
+        # shelf_count = 2
+        crop_image_list = self.crop_image(enter_image_path, self.shelf_count)
 
         res_list = []
+        match_count = 0
         for t in templ:
 
             img_tpl = cv2.imread(t, cv2.IMREAD_GRAYSCALE)
@@ -114,6 +126,7 @@ class Main:
 
                 # Match count on the shelf
                 match_count = len(coord)
+
                 img_res = cv2.cvtColor(img_gray, cv2.COLOR_GRAY2BGR)
                 img_res = self.draw_frames(img_res, coord)
                 tn = os.path.splitext(os.path.basename(img))[0]
@@ -126,12 +139,9 @@ class Main:
 
                 if len(coord) != 0:
                     res_list.append(("res_{}_{}.jpg".format(tn, match_count), shelf, match_count))
-                    postgres = PostgreSQL()
-                    image_key = postgres.select_agreement_id(self.image_key)
-                    print('agreement id:', image_key[0])
-                    print("matches:", match_count)
-                    print("shelf:", shelf)
-                    print()
+                if match_count != 0:
+                    break
+        estimate(self.image_key, match_count, shelf)
 
                 # print("- - - - - - - - - - - - - - -")
 
@@ -139,6 +149,6 @@ class Main:
 if __name__ == "__main__":
     # print("OpenCV ", cv2.__version__)
     # sys.exit(main())
-    main = Main("f")
-    # main = Main(sys.argv[1])
+    # main = Main(image_key="2018/07/28-17:37:06_sava_3", shelf_count=2)
+    main = Main(image_key=sys.argv[1], shelf_count=sys.argv[2])
     main.main()
