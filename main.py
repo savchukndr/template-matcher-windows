@@ -19,17 +19,106 @@ class Main:
         # self.image_key = '2018/07/27-19:44:31_sava_1'
 
     @staticmethod
+    def rotate_image(img, side=90):
+        (h, w) = img.shape[:2]
+        center = (w / 2, h / 2)
+        M = cv2.getRotationMatrix2D(center, side, 1.0)
+        return cv2.warpAffine(img, M, (w, h))
+
+    @staticmethod
+    def downsize(img, img_tpl, width, height):
+        print("start down")
+        print("shape 1", img.shape[1])
+        print("shape 0", img.shape[0])
+        for x in range(0, 10000, 100):
+            try:
+                r = (float(width) - x) / img.shape[1]
+                dim = (width - x, int(img.shape[0] * r))
+
+                if x == 0:
+                    img_res = cv2.resize(img, (width, height), interpolation=cv2.INTER_AREA)
+                    # img_res = cv2.resize(img, dim)
+                else:
+                    img_res = cv2.resize(img, dim, interpolation=cv2.INTER_AREA)
+                    # img_res = cv2.resize(img, dim)
+                    # cv2.imwrite(
+                    #     "C:\\Users\\savch\\PycharmProjects\\template-matcher\\data\\result\\QQQ{}.jpg".format(x), img_res)
+                # Match map building
+
+                match_map = cv2.matchTemplate(img_res, img_tpl, cv2.TM_CCOEFF_NORMED)
+            except Exception as e:
+                print("end down", e)
+                return []
+
+            max_match_map = np.max(match_map)  # The value of the map for the region closest to the template
+            print("x = {}, map = {}".format(x, max_match_map))
+            if max_match_map < 0.77:
+                if x == 10000:
+                    return []
+            else:
+                return match_map, max_match_map
+
+    @staticmethod
+    def upsize(img, img_tpl, width, height):
+        print("start up")
+        for x in range(0, 10000, 100):
+            try:
+                r = (float(width) + x) / img.shape[1]
+                dim = (width + x, int(img.shape[0] * r))
+
+                if x == 0:
+                    img_res = cv2.resize(img, (width, height), interpolation=cv2.INTER_CUBIC)
+                    # img_res = cv2.resize(img, (width, height))
+                else:
+                    img_res = cv2.resize(img, dim, interpolation=cv2.INTER_CUBIC)
+                    # img_res = cv2.resize(img, dim)
+                    # cv2.imwrite(
+                    #     "C:\\Users\\savch\\PycharmProjects\\template-matcher\\data\\result\\LLL{}.jpg".format(x),
+                    #     img_res)
+                # Match map building
+
+                match_map = cv2.matchTemplate(img_res, img_tpl, cv2.TM_CCOEFF_NORMED)
+            except Exception as e:
+                print("end down", e)
+                return []
+
+            max_match_map = np.max(match_map)  # The value of the map for the region closest to the template
+            print("x = {}, map = {}".format(x, max_match_map))
+            if max_match_map < 0.77:
+                if x == 10000:
+                    return []
+            else:
+                return match_map, max_match_map
+
+    @staticmethod
     def find_templ(img, img_tpl):
+        # img_canny = cv2.Canny(img, 100, 200)
+        # img_tpl_canny = cv2.Canny(img_tpl, 200, 400)
+        #
+        # # cv2.imwrite(
+        # #     "C:\\Users\\savch\\PycharmProjects\\template-matcher\\data\\result\\res1.jpg", img_canny)
+        # cv2.imwrite(
+        #     "C:\\Users\\savch\\PycharmProjects\\template-matcher\\data\\result\\res.jpg", img_tpl_canny)
+        #####################
         # Template shape
+        global max_match_map
         h, w = img_tpl.shape
+        height, width = img.shape
 
-        # Match map building
-        match_map = cv2.matchTemplate(img, img_tpl, cv2.TM_CCOEFF_NORMED)
+        tpl = main.downsize(img, img_tpl, width, height)
+        if not tpl:
+            tpl = main.upsize(img, img_tpl, width, height)
+            if not tpl:
+                return []
+            else:
+                match_map = tpl[0]
+                max_match_map = tpl[1]
+        else:
+            match_map = tpl[0]
+            max_match_map = tpl[1]
 
-        max_match_map = np.max(match_map)  # The value of the map for the region closest to the template
-        # print(max_match_map)
-        if (max_match_map < 0.71):  # No matches found
-            return []
+        # if max_match_map < 0.71:  # No matches found
+        #     return []
 
         a = 0.7  # Coefficient of "similarity", 0 - all, 1 - exact match
 
@@ -88,25 +177,28 @@ class Main:
 
     def main(self):
         # Connect to redis and get image to proceed
-        postgres = PostgreSQL()
-        agreement_id = postgres.select_agreement_id(self.image_key)
-        product_title = postgres.select_product_title(str(agreement_id[0]))
-        product_type_title = postgres.select_product_type_tytle(product_title[0])
+        # postgres = PostgreSQL()
+        # agreement_id = postgres.select_agreement_id(self.image_key)
+        # product_title = postgres.select_product_title(str(agreement_id[0]))
+        # product_type_title = postgres.select_product_type_tytle(product_title[0])
         global match_count, shelf
-        redis = Redis(self.image_key)
-        redis.get_image()
+        # redis = Redis(self.image_key)
+        # redis.get_image()
 
         # TODO: change to image
-        # enter_image_path = "C:\\Users\\savch\\PycharmProjects\\template-matcher\\data\\image\\image.jpg"
-        enter_image_path = "C:\\Users\\savch\\PycharmProjects\\template-matcher\\data\\image\\0000.jpg"
-        template_image_folder = "C:\\Users\\savch\\PycharmProjects\\template-matcher\\data\\template\\{}".format(product_type_title[0])
+        enter_image_path = "C:\\Users\\savch\\PycharmProjects\\template-matcher\\data\\image\\image3.jpg"
+        # enter_image_path = "C:\\Users\\savch\\PycharmProjects\\template-matcher\\data\\image\\0000.jpg"
+        template_image_folder = "C:\\Users\\savch\\PycharmProjects\\template-matcher\\data\\template\\alcohol"
+        # template_image_folder = "C:\\Users\\savch\\PycharmProjects\\template-matcher\\data\\template\\{}".format(product_type_title[0])
         print(template_image_folder)
 
         # template image
         templ = [os.path.join(template_image_folder, b) for b in os.listdir(template_image_folder) if
                  os.path.isfile(os.path.join(template_image_folder, b))]
-        templ = [template for template in templ if template == "C:\\Users\\savch\\PycharmProjects\\template-matcher\\data\\template\\{}\\{}.jpg".format(product_type_title[0], product_title[0])]
-
+        # templ = [template for template in templ if template == "C:\\Users\\savch\\PycharmProjects\\template-matcher\\data\\template\\{}\\{}.jpg".format(product_type_title[0], product_title[0])]
+        templ = [template for template in templ if
+                 template == "C:\\Users\\savch\\PycharmProjects\\template-matcher\\data\\template\\{}\\{}.jpg".format(
+                     "alcohol", "t2")]
 
 
         # shelf count
@@ -141,7 +233,9 @@ class Main:
                     res_list.append(("res_{}_{}.jpg".format(tn, match_count), shelf, match_count))
                 if match_count != 0:
                     break
-        estimate(self.image_key, match_count, shelf)
+            print(match_count)
+
+        # estimate(self.image_key, match_count, shelf)
 
                 # print("- - - - - - - - - - - - - - -")
 
@@ -149,6 +243,6 @@ class Main:
 if __name__ == "__main__":
     # print("OpenCV ", cv2.__version__)
     # sys.exit(main())
-    # main = Main(image_key="2018/07/28-17:37:06_sava_3", shelf_count=2)
-    main = Main(image_key=sys.argv[1], shelf_count=sys.argv[2])
+    main = Main(image_key="2018/07/28-17:37:06_sava_3", shelf_count=1)
+    # main = Main(image_key=sys.argv[1], shelf_count=sys.argv[2])
     main.main()
