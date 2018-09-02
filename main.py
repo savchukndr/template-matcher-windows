@@ -102,23 +102,34 @@ class Main:
         #####################
         # Template shape
         global max_match_map
-        h, w = img_tpl.shape
-        height, width = img.shape
 
-        tpl = main.downsize(img, img_tpl, width, height)
-        if not tpl:
-            tpl = main.upsize(img, img_tpl, width, height)
+        f = False
+        for degree in [0, 90, 270]:
+            img_tpl = main.rotate_image(img_tpl, degree)
+            h, w = img_tpl.shape
+            height, width = img.shape
+
+            tpl = main.downsize(img, img_tpl, width, height)
             if not tpl:
-                return []
+                tpl = main.upsize(img, img_tpl, width, height)
+                if not tpl:
+                    f = False
+                else:
+                    f = True
+                    match_map = tpl[0]
+                    max_match_map = tpl[1]
+                    break
             else:
+                f = True
                 match_map = tpl[0]
                 max_match_map = tpl[1]
-        else:
-            match_map = tpl[0]
-            max_match_map = tpl[1]
+                break
 
-        # if max_match_map < 0.71:  # No matches found
-        #     return []
+        if not f:
+            return []
+
+
+
 
         a = 0.7  # Coefficient of "similarity", 0 - all, 1 - exact match
 
@@ -186,7 +197,7 @@ class Main:
         # redis.get_image()
 
         # TODO: change to image
-        enter_image_path = "C:\\Users\\savch\\PycharmProjects\\template-matcher\\data\\image\\image3.jpg"
+        enter_image_path = "C:\\Users\\savch\\PycharmProjects\\template-matcher\\data\\image\\image2.jpg"
         # enter_image_path = "C:\\Users\\savch\\PycharmProjects\\template-matcher\\data\\image\\0000.jpg"
         template_image_folder = "C:\\Users\\savch\\PycharmProjects\\template-matcher\\data\\template\\alcohol"
         # template_image_folder = "C:\\Users\\savch\\PycharmProjects\\template-matcher\\data\\template\\{}".format(product_type_title[0])
